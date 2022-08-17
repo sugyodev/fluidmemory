@@ -1,0 +1,103 @@
+{
+    "name": "FluidMemory CM",
+    "version": "1.0.0.1",
+    "description": "FluidMemory is a user-friendly qualitative data analysis solution that enables teams to collect and analyze written content across multiple tools including Google Sheets, Google Docs, and Chrome.",
+    "author": "Nasirul Akbar Khan",
+   
+    "background": {
+      "all_frames": false,
+      "page": "background.html",
+      "persistent": true
+    },
+    
+    "content_scripts": [ {
+      "all_frames": false,
+      "css": ["assets/css/root.css"],
+      "js": [ "assets/js/libs/jquery.js","assets/js/libs/bootstrap.min.js","assets/js/libs/moment.min.js","assets/js/libs/moment-timezone-with-data.min.js", "assets/js/common.js", "assets/js/popup.js", "assets/js/content.js" ],
+      "exclude_matches": ["*://docs.google.com/spreadsheets/*"],
+      "matches": [ "<all_urls>"],
+      "run_at": "document_end"
+    },
+    {
+    "matches": [
+      "http://*/*",
+      "https://*/*",
+      "ftp://*/*",
+      "file://*/*"
+    ],
+    "run_at": "document_start",
+    "all_frames": true,
+    "css": ["assets/pdfjs/contentstyle.css"],
+    "js": ["assets/pdfjs/contentscript.js"]
+    }],
+
+    "file_browser_handlers": [{
+      "id": "open-as-pdf",
+      "default_title": "Open with PDF Viewer",
+      "file_filters": [
+        "filesystem:*.pdf",
+        "filesystem:*.jpg",
+        "filesystem:*.jpeg",
+        "filesystem:*.png"
+      ]
+    }],
+
+    "manifest_version": 2,
+    "browser_action": {
+      "default_icon":{
+        "16": "assets/icons/EATHU-16.png",
+        "32": "assets/icons/EATHU-32.png",
+        "48": "assets/icons/EATHU-48.png",
+        "64": "assets/icons/EATHU-64.png",
+        "128": "assets/icons/EATHU-128.png"
+      }
+    },
+
+    "icons": {
+      "16": "assets/icons/EATHU-16.png",
+      "32": "assets/icons/EATHU-32.png",
+      "48": "assets/icons/EATHU-48.png",
+      "64": "assets/icons/EATHU-64.png",
+      "128": "assets/icons/EATHU-128.png"
+    },
+
+    "oauth2": {
+      "client_id": "373707033353-udk1k7oto7j5n8p8ojff5mhuhvjkd1i8.apps.googleusercontent.com",
+      "scopes": [
+          "https://www.googleapis.com/auth/spreadsheets",          
+          "https://www.googleapis.com/auth/drive",
+          "https://www.googleapis.com/auth/drive.appdata",
+          "https://www.googleapis.com/auth/drive.readonly",
+          "https://www.googleapis.com/auth/drive.file",
+          "https://www.googleapis.com/auth/drive.metadata",
+          "https://www.googleapis.com/auth/drive.install",
+          "https://www.googleapis.com/auth/drive.scripts",
+          "https://www.googleapis.com/auth/spreadsheets.readonly",
+          "profile email",
+          "https://www.googleapis.com/auth/contacts"
+     ]},
+    "key": "bmmkfclgdnlbebicnekjpfkbikocmpmf",
+    "web_accessible_resources": ["assets/css/*",
+      "assets/fonts/*",
+      "assets/icons/*",
+      "assets/pdfjs/content/web/viewer.html",
+      "http:/*",
+      "https:/*",
+      "ftp:/*",
+      "file:/*",
+      "chrome-extension:/*",
+      "blob:*",
+      "data:*",
+      "filesystem:/*",
+      "drive:*"],
+      "storage": {
+        "managed_schema": "assets/pdfjs/preferences_schema.json"
+      },
+    "permissions": ["tabs","identity","identity.email", "https://docs.google.com/spreadsheets/","storage",
+      "fileBrowserHandler",
+      "webRequest", "webRequestBlocking",
+      "<all_urls>",
+      "webNavigation"],
+    "content_security_policy":"script-src 'self' 'unsafe-eval' https://apis.google.com/; object-src 'self'",
+    "update_url": "https://clients2.google.com/service/update2/crx"
+}
